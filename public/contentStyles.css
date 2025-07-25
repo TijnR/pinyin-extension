@@ -1,3 +1,21 @@
 .chinese-text-blue {
-  color: blue;
+  color: #0000ff;
+  position: relative;
+  margin-top: 0.2em;
+  padding-inline: 0.1em;
+
+  &::before {
+    content: attr(data-pinyin);
+    position: absolute;
+    top: -1em;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #0000ff;
+    font-size: 0.5em;
+    font-weight: 400;
+    font-style: normal;
+    font-family: "PingFang SC", "Microsoft YaHei", "SimSun", "Arial",
+      "sans-serif";
+  }
 }

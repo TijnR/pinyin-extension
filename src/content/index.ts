@@ -1,72 +1,100 @@
 import { containsChineseCharacters } from "../utils/containsChineseCharacters";
+import { pinyin as pinyinPro } from "pinyin-pro";
 
-// Function to find and style elements with Chinese characters
-function styleChineseElements(): void {
-  // Get all text nodes and elements in the document
-  const walker = document.createTreeWalker(
-    document.body,
-    NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT
-  );
+// Function to wrap Chinese characters in span elements
+function wrapChineseCharacters(): void {
+  // Get all text nodes in the document
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
 
-  const elementsToStyle = new Set<Element>();
+  const textNodesToProcess: Text[] = [];
   let node: Node | null;
 
-  // Walk through all nodes to find those with Chinese characters
+  // Collect all text nodes that contain Chinese characters
   while ((node = walker.nextNode())) {
     if (node.nodeType === Node.TEXT_NODE) {
       const text = node.textContent || "";
       if (containsChineseCharacters(text)) {
-        // Find the closest element parent
-        let parent = node.parentElement;
-        while (parent && parent !== document.body) {
-          elementsToStyle.add(parent);
-          parent = parent.parentElement;
-        }
-      }
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
-      const element = node as Element;
-      const text = element.textContent || "";
-      if (containsChineseCharacters(text)) {
-        elementsToStyle.add(element);
+        textNodesToProcess.push(node as Text);
       }
     }
   }
 
-  // Add blue class to all elements containing Chinese characters
-  elementsToStyle.forEach((element) => {
-    element.classList.add("chinese-text-blue");
+  // Process each text node that contains Chinese characters
+  textNodesToProcess.forEach((textNode) => {
+    const text = textNode.textContent || "";
+    const parent = textNode.parentElement;
+
+    if (!parent) return;
+
+    // Create a document fragment to hold the processed content
+    const fragment = document.createDocumentFragment();
+    let lastIndex = 0;
+
+    // Find and wrap each Chinese character
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
+      if (containsChineseCharacters(char)) {
+        const pinyin = pinyinPro(char);
+        // Add text before the Chinese character
+        if (i > lastIndex) {
+          fragment.appendChild(
+            document.createTextNode(text.substring(lastIndex, i))
+          );
+        }
+
+        // Create span for the Chinese character
+        const span = document.createElement("span");
+        span.dataset.pinyin = pinyin.split(" ").join("");
+        span.className = "chinese-text-blue";
+        span.textContent = char;
+        fragment.appendChild(span);
+
+        lastIndex = i + 1;
+      }
+    }
+
+    // Add remaining text after the last Chinese character
+    if (lastIndex < text.length) {
+      fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
+    }
+
+    // Replace the original text node with the processed fragment
+    parent.replaceChild(fragment, textNode);
   });
 }
 
 // Initialize when DOM is ready
 function init(): void {
-  styleChineseElements();
+  wrapChineseCharacters();
 }
 
 init();
 
 // Also run when new content is added (for dynamic content)
 const observer = new MutationObserver((mutations) => {
-  let shouldRestyle = false;
+  let shouldRewrap = false;
 
   mutations.forEach((mutation) => {
     if (mutation.type === "childList") {
       mutation.addedNodes.forEach((node) => {
-        if (
-          node.nodeType === Node.ELEMENT_NODE ||
-          node.nodeType === Node.TEXT_NODE
-        ) {
+        if (node.nodeType === Node.TEXT_NODE) {
           const text = node.textContent || "";
           if (containsChineseCharacters(text)) {
-            shouldRestyle = true;
+            shouldRewrap = true;
+          }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          const element = node as Element;
+          const text = element.textContent || "";
+          if (containsChineseCharacters(text)) {
+            shouldRewrap = true;
           }
         }
       });
     }
   });
 
-  if (shouldRestyle) {
-    styleChineseElements();
+  if (shouldRewrap) {
+    wrapChineseCharacters();
   }
 });
 
