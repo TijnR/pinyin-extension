@@ -5,6 +5,7 @@
   line-height: 1.2;
   z-index: 100;
   color: #0000ff;
+  white-space: nowrap;
 
   &::before {
     content: attr(data-pinyin);
