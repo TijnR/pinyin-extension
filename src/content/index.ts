@@ -1,5 +1,7 @@
 import { containsChineseCharacters } from "../utils/containsChineseCharacters";
 import { pinyin as pinyinPro } from "pinyin-pro";
+import { initPopupEventListeners } from "./popupEventListeners";
+import { CLASS_SHOW_TOP } from "./const";
 
 // Track processed nodes to avoid infinite loops
 const processedNodes = new Set<Node>();
@@ -84,11 +86,6 @@ function wrapChineseCharacters(): void {
         const text = textNode.textContent || "";
         const parent = textNode.parentElement;
 
-        console.log(
-          "Processing text node:",
-          text.substring(0, 50) + (text.length > 50 ? "..." : "")
-        );
-
         if (!parent || !shouldProcessElement(parent)) {
           console.log("Skipping text node - parent not processable");
           return;
@@ -160,6 +157,12 @@ function debouncedWrapChineseCharacters(): void {
 
 // Initialize when DOM is ready
 function init(): void {
+  console.log("Content script initializing...");
+
+  // Always initialize popup event listeners first
+  initPopupEventListeners();
+  document.body.classList.add(CLASS_SHOW_TOP);
+
   // Wait for DOM to be fully loaded
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", wrapChineseCharacters);

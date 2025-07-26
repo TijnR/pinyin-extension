@@ -1,16 +1,14 @@
 .chinese-pinyin {
   position: relative;
-  margin-top: 1em;
+  display: inline-block;
   padding-inline: 0.5em;
   line-height: 1.2;
   z-index: 100;
-  color: #0000ff;
   white-space: nowrap;
 
   &::before {
     content: attr(data-pinyin);
     position: absolute;
-    top: -1em;
     left: 0;
     right: 0;
     text-align: center;
@@ -19,5 +17,25 @@
     font-style: normal;
     font-family: "PingFang SC", "Microsoft YaHei", "SimSun", "Arial",
       "sans-serif";
+  }
+}
+
+.pinyin-show-bottom .chinese-pinyin {
+  color: green;
+  margin-bottom: 1em;
+
+  &::before {
+    top: auto;
+    bottom: -1em;
+  }
+}
+
+.pinyin-show-top .chinese-pinyin {
+  color: red;
+  margin-top: 1em;
+
+  &::before {
+    top: -1em;
+    bottom: auto;
   }
 }

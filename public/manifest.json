@@ -1,10 +1,22 @@
 {
   "manifest_version": 3,
-  "name": "Pinyin Now",
-  "version": "0.0.5",
-  "description": "Pinyin Now is a Chrome extension that helps display pinyin for Chinese characters.",
+  "name": "Pinyin Pro",
+  "version": "0.0.6",
+  "description": "Pinyin Pro helps you get pinyin everywhere you want.",
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "32": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "icons": {
+    "16": "logo.png",
+    "32": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
   },
   "content_scripts": [
     {
@@ -13,5 +25,6 @@
       "css": ["contentStyles.css"]
     }
   ],
-  "permissions": []
+  "permissions": ["scripting", "activeTab"],
+  "host_permissions": ["<all_urls>"]
 }

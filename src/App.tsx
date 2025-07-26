@@ -1,7 +1,43 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+// import { sendDirectionMessage } from "./utils/chrome";
+
+const sendEventToContentScript = async (direction: "top" | "bottom") => {
+  try {
+    // Get the active tab
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    });
+
+    if (!tab.id) {
+      console.error("No active tab found");
+      return;
+    }
+
+    // Send the direction message with proper error handling
+    chrome.tabs.sendMessage(
+      tab.id,
+      { type: "direction", payload: { direction } },
+      (response) => {
+        if (chrome.runtime.lastError) {
+          console.error(
+            "Error sending direction message:",
+            chrome.runtime.lastError
+          );
+          // Show user-friendly error message
+          alert(
+            "Content script not ready. Please refresh the page and try again."
+          );
+          return;
+        }
+        console.log("Response from content script:", response);
+      }
+    );
+  } catch (error) {
+    console.error("Error in sendEventToContentScript:", error);
+  }
+};
 
 function App() {
   const [count, setCount] = useState(0);
@@ -9,25 +45,19 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <img src="/logo.svg" alt="logo" />
       </div>
-      <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <button onClick={() => sendEventToContentScript("top")}>
+          Show Top
+        </button>
+        <button onClick={() => sendEventToContentScript("bottom")}>
+          Show Bottom
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
