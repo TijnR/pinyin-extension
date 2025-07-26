@@ -1,4 +1,4 @@
-import { containsChineseCharacters } from "../utils/containsChineseCharacters";
+import { containsChineseCharacters } from "../utils/containsChineseCharacters/containsChineseCharacters";
 import { pinyin as pinyinPro } from "pinyin-pro";
 import { initPopupEventListeners } from "./popupEventListeners";
 import { CLASS_SHOW_TOP } from "./const";

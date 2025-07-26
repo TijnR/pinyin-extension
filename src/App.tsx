@@ -1,6 +1,4 @@
-import { useState } from "react";
 import "./App.css";
-// import { sendDirectionMessage } from "./utils/chrome";
 
 const sendEventToContentScript = async (direction: "top" | "bottom") => {
   try {
@@ -40,17 +38,10 @@ const sendEventToContentScript = async (direction: "top" | "bottom") => {
 };
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <div>
-        <img src="/logo.svg" alt="logo" />
-      </div>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+      <img src="/logo.svg" alt="logo" className="w-40 mb-8" />
+      <div className="flex flex-col gap-2">
         <button onClick={() => sendEventToContentScript("top")}>
           Show Top
         </button>
