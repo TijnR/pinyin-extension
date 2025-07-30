@@ -1,3 +1,7 @@
+.no-chinese-pinyin {
+  display: inline-block;
+}
+
 .chinese-pinyin {
   position: relative;
   display: inline-block;

@@ -1,5 +1,6 @@
 import { containsChineseCharacters } from "../utils/containsChineseCharacters/containsChineseCharacters";
 import { pinyin as pinyinPro } from "pinyin-pro";
+import { segmenter } from "../utils/segmenter";
 
 // Track processed nodes to avoid infinite loops
 const processedNodes = new Set<Node>();
@@ -8,7 +9,7 @@ let isProcessing = false;
 // Safe pinyin generation with error handling
 function safeGetPinyin(char: string): string {
   try {
-    const pinyin = pinyinPro(char);
+    const pinyin = pinyinPro(char, { nonZh: "removed" });
     return pinyin.split(" ").join("");
   } catch (error) {
     console.warn("Pinyin generation failed for character:", char, error);
@@ -87,38 +88,25 @@ function processTextNode(textNode: Text): void {
 
     // Create a document fragment to hold the processed content
     const fragment = document.createDocumentFragment();
-    let lastIndex = 0;
 
-    // Find and wrap each Chinese character
-    for (let i = 0; i < text.length; i++) {
-      const char = text[i];
-      if (containsChineseCharacters(char)) {
-        const pinyin = safeGetPinyin(char);
-
-        // Add text before the Chinese character
-        if (i > lastIndex) {
-          fragment.appendChild(
-            document.createTextNode(text.substring(lastIndex, i))
-          );
-        }
-
-        // Create span for the Chinese character
+    const iterator = Array.from(segmenter.segment(text));
+    for (const { segment } of iterator) {
+      if (!containsChineseCharacters(segment)) {
         const span = document.createElement("span");
-        span.dataset.pinyin = pinyin;
-        span.className = "chinese-pinyin pinyin-processed";
-        span.textContent = char;
+        span.className = "no-chinese-pinyin";
+        span.textContent = segment;
         fragment.appendChild(span);
-
-        lastIndex = i + 1;
+        continue;
       }
+
+      const pinyin = safeGetPinyin(segment);
+      const span = document.createElement("span");
+      span.dataset.pinyin = pinyin;
+      span.className = "chinese-pinyin pinyin-processed";
+      span.textContent = segment;
+      fragment.appendChild(span);
     }
 
-    // Add remaining text after the last Chinese character
-    if (lastIndex < text.length) {
-      fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
-    }
-
-    // Replace the original text node with the processed fragment
     parent.replaceChild(fragment, textNode);
   } catch (error) {
     console.warn("Error processing text node:", error);
