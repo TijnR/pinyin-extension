@@ -10,7 +10,7 @@
     line-height: 1.2;
     z-index: 100;
     white-space: nowrap;
-    zoom: attr(data-zoom type(<number>), 1);
+    zoom: attr(data-zoom type(<number>), 1.25);
 
     &::before {
       content: attr(data-pinyin);

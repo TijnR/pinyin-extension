@@ -128,6 +128,14 @@ export function wrapChineseCharacters(): void {
       `Found ${textNodesToProcess.length} text nodes with Chinese characters`
     );
 
+    // Set storage variable
+    if (chrome.storage && textNodesToProcess.length > 0) {
+      chrome.storage.sync.set({
+        chineseWrapperReady: true,
+        processedNodesCount: textNodesToProcess.length,
+      });
+    }
+
     // Process each text node that contains Chinese characters
     textNodesToProcess.forEach(processTextNode);
   } catch (error) {
