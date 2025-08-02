@@ -25,6 +25,6 @@
       "css": ["contentStyles.css"]
     }
   ],
-  "permissions": ["scripting", "activeTab"],
+  "permissions": ["scripting", "activeTab", "storage"],
   "host_permissions": ["<all_urls>"]
 }

@@ -1,10 +1,11 @@
 import { initPopupEventListeners } from "./popupEventListeners";
-import { CLASS_SHOW_TOP } from "./const";
+import { CLASS_SHOW_PINYIN, CLASS_SHOW_TOP } from "./const";
 import { wrapChineseCharacters } from "./chineseWrapper";
 import { initWindowTypes } from "./window";
 import { chineseMutationObserver } from "./chineseMutationObserver";
 
 function setDefaultBaseStyles(): void {
+  document.body.classList.add(CLASS_SHOW_PINYIN);
   document.body.classList.add(CLASS_SHOW_TOP);
 }
 

@@ -1,5 +1,5 @@
 import { isChromeExtension } from "../utils/chrome";
-import { CLASS_SHOW_BOTTOM, CLASS_SHOW_TOP } from "./const";
+import { CLASS_SHOW_BOTTOM, CLASS_SHOW_PINYIN, CLASS_SHOW_TOP } from "./const";
 
 export const initPopupEventListeners = () => {
   console.log("Initializing popup event listeners...");
@@ -41,6 +41,14 @@ export const initPopupEventListeners = () => {
           message: error instanceof Error ? error.message : "Unknown error",
         });
       }
+    } else if (message.type === "onOff") {
+      console.log("Received onOff event from popup:", message.payload);
+      document.body.classList.toggle(CLASS_SHOW_PINYIN, message.payload.onOff);
+    } else if (message.type === "zoom") {
+      console.log("Received zoom event from popup:", message.payload);
+      [...document.querySelectorAll(".chinese-pinyin")].forEach((element) => {
+        (element as HTMLElement).dataset.zoom = message.payload.zoom.toString();
+      });
     } else {
       // Handle unknown message types
       console.warn("Unknown message type received:", message.type);
