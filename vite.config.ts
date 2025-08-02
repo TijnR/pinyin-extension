@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        popup: resolve(__dirname, "popup.html"),
+        popup: resolve(__dirname, "index.html"),
         contentScript: resolve(__dirname, "src/content/index.ts"),
       },
       output: {
@@ -20,5 +20,11 @@ export default defineConfig({
         },
       },
     },
+  },
+  server: {
+    port: 5174,
+  },
+  define: {
+    global: "globalThis",
   },
 });
