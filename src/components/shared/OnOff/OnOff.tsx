@@ -1,28 +1,28 @@
 import { Switch } from "@/components/ui/switch";
 import { useMutation } from "@tanstack/react-query";
-import { sendOnOff } from "./api";
+import { sendEnable } from "./api";
 
 export const OnOff = ({
-  onOff,
-  setOnOff,
+  enable,
+  setEnable,
 }: {
-  onOff: boolean;
-  setOnOff: (onOff: boolean) => void;
+  enable: boolean;
+  setEnable: (enable: boolean) => void;
 }) => {
   const { mutate: sendEvent } = useMutation({
-    mutationFn: (onOff: boolean) => {
-      return sendOnOff(onOff);
+    mutationFn: (enable: boolean) => {
+      return sendEnable(enable);
     },
   });
 
-  const handleOnOff = (onOff: boolean) => {
-    setOnOff(onOff);
-    sendEvent(onOff);
+  const handleOnOff = (enable: boolean) => {
+    setEnable(enable);
+    sendEvent(enable);
   };
 
   return (
     <Switch
-      checked={onOff}
+      checked={enable}
       onCheckedChange={handleOnOff}
       style={{ zoom: 1.5 }}
     />

@@ -1,4 +1,10 @@
-import { useState, useEffect, type Dispatch, type SetStateAction } from "react";
+import {
+  useState,
+  useEffect,
+  type Dispatch,
+  type SetStateAction,
+  useCallback,
+} from "react";
 
 // Check if we're running in a Chrome extension context
 const isChromeExtension = () => {
@@ -43,20 +49,23 @@ export const useChromeState = <T>(
   }, [key]);
 
   // Custom setter that also updates Chrome storage when available
-  const setStateWithStorage: Dispatch<SetStateAction<T>> = (value) => {
-    setState((prevState) => {
-      const newValue =
-        typeof value === "function"
-          ? (value as (prev: T) => T)(prevState)
-          : value;
+  const setStateWithStorage: Dispatch<SetStateAction<T>> = useCallback(
+    (value) => {
+      setState((prevState) => {
+        const newValue =
+          typeof value === "function"
+            ? (value as (prev: T) => T)(prevState)
+            : value;
 
-      if (isChromeExtension()) {
-        chrome.storage.sync.set({ [key]: newValue });
-      }
+        if (isChromeExtension()) {
+          chrome.storage.sync.set({ [key]: newValue });
+        }
 
-      return newValue;
-    });
-  };
+        return newValue;
+      });
+    },
+    [key]
+  );
 
   return [state, setStateWithStorage];
 };

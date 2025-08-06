@@ -8,6 +8,7 @@ import {
 import { MAX, MIN, STEP } from "./constants";
 import { useMutation } from "@tanstack/react-query";
 import { sendZoom } from "./api";
+import { CHROME_STORAGE_KEYS } from "@/utils/constants";
 
 export const Zoom = () => {
   const { mutate: sendEvent } = useMutation({
@@ -15,7 +16,9 @@ export const Zoom = () => {
       return sendZoom(zoom);
     },
   });
-  const [zoom, setZoom] = useChromeState<number[]>("zoom", [1.25]);
+  const [zoom, setZoom] = useChromeState<number[]>(CHROME_STORAGE_KEYS.zoom, [
+    1.25,
+  ]);
 
   const handleZoom = (value: number[]) => {
     setZoom(value);

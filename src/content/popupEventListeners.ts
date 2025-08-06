@@ -1,5 +1,7 @@
 import { isChromeExtension } from "../utils/chrome";
-import { CLASS_SHOW_BOTTOM, CLASS_SHOW_PINYIN, CLASS_SHOW_TOP } from "./const";
+import { handleDirection } from "./eventHandlers/handleDirection";
+import { handleOnOff } from "./eventHandlers/handleOnOff";
+import { handleZoom } from "./eventHandlers/handleZoom";
 
 export const initPopupEventListeners = () => {
   console.log("Initializing popup event listeners...");
@@ -9,50 +11,57 @@ export const initPopupEventListeners = () => {
     return;
   }
 
-  console.log("Setting up message listener...");
   chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
     console.log("Content script received message:", message);
 
-    if (message.type === "ping") {
-      // Respond to ping to confirm content script is ready
-      console.log("Responding to ping...");
-      sendResponse({ status: "ok", message: "Content script ready" });
-    } else if (message.type === "direction") {
-      try {
-        const direction = message.payload.direction;
-        // Handle the event
-        console.log("Received direction event from popup:", message.payload);
-        document.body.classList.add(
-          direction === "bottom" ? CLASS_SHOW_BOTTOM : CLASS_SHOW_TOP
-        );
-        document.body.classList.remove(
-          direction === "bottom" ? CLASS_SHOW_TOP : CLASS_SHOW_BOTTOM
-        );
+    switch (message.type) {
+      case "ping":
+        // Respond to ping to confirm content script is ready
+        console.log("Responding to ping...");
+        sendResponse({ status: "ok", message: "Content script ready" });
+        break;
 
-        // Send a response immediately
+      case "direction":
+        try {
+          const direction = message.payload.direction;
+          // Handle the event
+          handleDirection(direction);
+          // Send a response immediately
+          sendResponse({
+            status: "ok",
+            message: "Direction updated successfully",
+          });
+        } catch (error) {
+          console.error("Error handling direction message:", error);
+          sendResponse({
+            status: "error",
+            message: error instanceof Error ? error.message : "Unknown error",
+          });
+        }
+        break;
+
+      case "enable":
+        console.log("Received enable event from popup:", message.payload);
+        handleOnOff(message.payload.enable);
         sendResponse({
           status: "ok",
-          message: "Direction updated successfully",
+          message: "Enable updated successfully",
         });
-      } catch (error) {
-        console.error("Error handling direction message:", error);
+        break;
+
+      case "zoom":
+        console.log("Received zoom event from popup:", message.payload);
+        handleZoom(message.payload.zoom);
         sendResponse({
-          status: "error",
-          message: error instanceof Error ? error.message : "Unknown error",
+          status: "ok",
+          message: "Zoom updated successfully",
         });
-      }
-    } else if (message.type === "onOff") {
-      console.log("Received onOff event from popup:", message.payload);
-      document.body.classList.toggle(CLASS_SHOW_PINYIN, message.payload.onOff);
-    } else if (message.type === "zoom") {
-      console.log("Received zoom event from popup:", message.payload);
-      [...document.querySelectorAll(".chinese-pinyin")].forEach((element) => {
-        (element as HTMLElement).dataset.zoom = message.payload.zoom.toString();
-      });
-    } else {
-      // Handle unknown message types
-      console.warn("Unknown message type received:", message.type);
-      sendResponse({ status: "error", message: "Unknown message type" });
+        break;
+
+      default:
+        // Handle unknown message types
+        console.warn("Unknown message type received:", message.type);
+        sendResponse({ status: "error", message: "Unknown message type" });
     }
 
     // Return true to indicate we will send a response asynchronously

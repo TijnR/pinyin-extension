@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { sendDirection } from "./api";
 import { Switch } from "@/components/ui/switch";
 import { ArrowDownIcon, ArrowUpIcon } from "@phosphor-icons/react";
+import { CHROME_STORAGE_KEYS } from "@/utils/constants";
 
 export const TopBottom = () => {
   const { mutate: sendEvent } = useMutation({
@@ -11,7 +12,7 @@ export const TopBottom = () => {
     },
   });
   const [topBottom, setTopBottom] = useChromeState<"top" | "bottom">(
-    "topBottom",
+    CHROME_STORAGE_KEYS.topBottom,
     "top"
   );
 

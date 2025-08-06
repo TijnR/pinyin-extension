@@ -1,8 +1,8 @@
 import { chromeQueryClient } from "@/utils/chromeQueryClient";
 
-export const sendOnOff = async (onOff: boolean) => {
+export const sendEnable = async (enable: boolean) => {
   return chromeQueryClient({
-    type: "onOff",
-    payload: { onOff },
+    type: "enable",
+    payload: { enable },
   });
 };

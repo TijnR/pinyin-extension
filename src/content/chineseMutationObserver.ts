@@ -3,8 +3,19 @@ import { wrapChineseCharacters } from "./chineseWrapper";
 import { debouncedWrapChineseCharacters } from "./debounce";
 
 export const chineseMutationObserver = () => {
-  const observer = new MutationObserver((mutations) => {
+  const observer = new MutationObserver(async (mutations) => {
+    const { enable } = await chrome.storage.sync.get("enable");
+    console.log("enable1", enable);
+
+    if (!enable) {
+      return;
+    }
+
+    console.log("enable2", enable);
+
     let shouldRewrap = false;
+
+    console.log("Mutating stuff");
 
     mutations.forEach((mutation) => {
       if (mutation.type === "childList") {

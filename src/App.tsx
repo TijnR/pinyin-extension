@@ -1,36 +1,40 @@
-import { useEffect } from "react";
 import { OnOff } from "./components/shared/OnOff/OnOff";
 import { TopBottom } from "./components/shared/TopBottom/TopBottom";
 import { Zoom } from "./components/shared/Zoom/Zoom";
 import { useChromeState } from "./hooks/useChromeState";
 import { cn } from "./lib/utils";
+import { CHROME_STORAGE_KEYS } from "./utils/constants";
 
 function App() {
-  const [onOff, setOnOff] = useChromeState<boolean>("onOff", false);
-  const [chineseWrapperReady] = useChromeState<boolean>(
-    "chineseWrapperReady",
-    false
+  const [enable, setEnable] = useChromeState<boolean>(
+    CHROME_STORAGE_KEYS.enable,
+    true
   );
-
-  useEffect(() => {
-    // Check if Chinese wrapper is ready when popup opens
-    if (chineseWrapperReady) {
-      setOnOff(true);
-    }
-  }, [chineseWrapperReady, setOnOff]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-8 p-4 w-dvw">
       <img src="/logo.svg" alt="logo" className="w-40" />
-      <OnOff onOff={onOff} setOnOff={setOnOff} />
+      {/* {disableExtension && (
+        <div className="opacity-30 pointer-events-none">
+          <p>Extension Could not find any Chinese characters on the page</p>
+        </div>
+      )} */}
       <div
         className={cn(
-          "flex flex-col items-center gap-2",
-          !onOff && "opacity-30 pointer-events-none"
+          "flex flex-col items-center justify-center gap-8"
+          // disableExtension && "opacity-30 pointer-events-none"
         )}
       >
-        <TopBottom />
-        <Zoom />
+        <OnOff enable={enable} setEnable={setEnable} />
+        <div
+          className={cn(
+            "flex flex-col items-center gap-2",
+            !enable && "opacity-30 pointer-events-none"
+          )}
+        >
+          <TopBottom />
+          <Zoom />
+        </div>
       </div>
     </div>
   );
