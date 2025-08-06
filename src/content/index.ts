@@ -1,26 +1,18 @@
 import { initPopupEventListeners } from "./popupEventListeners";
-import { CLASS_SHOW_PINYIN, CLASS_SHOW_TOP } from "./const";
+import { CLASS_SHOW_PINYIN } from "./const";
 import { wrapChineseCharacters } from "./chineseWrapper";
 import { initWindowTypes } from "./window";
 import { chineseMutationObserver } from "./chineseMutationObserver";
 import { handleZoom } from "./eventHandlers/handleZoom";
-import { handleDirection } from "./eventHandlers/handleDirection";
 import { handleOnOff } from "./eventHandlers/handleOnOff";
 
 function setDefaultBaseStyles(): void {
   document.body.classList.add(CLASS_SHOW_PINYIN);
-  document.body.classList.add(CLASS_SHOW_TOP);
 
   chrome.storage.sync.get("zoom", (result) => {
     console.log("zoom", result);
     if (result.zoom) {
       handleZoom(result.zoom);
-    }
-  });
-
-  chrome.storage.sync.get("topBottom", (result) => {
-    if (result.topBottom) {
-      handleDirection(result.topBottom);
     }
   });
 

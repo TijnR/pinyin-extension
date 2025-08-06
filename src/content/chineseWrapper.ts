@@ -30,7 +30,7 @@ function shouldProcessElement(element: Element): boolean {
   if (element.tagName === "SVG" || element.closest("svg")) return false;
 
   // Skip elements with specific classes that might be interactive
-  const skipClasses = ["chinese-pinyin", "pinyin-processed"];
+  const skipClasses = ["chinese-pinyin"];
   if (skipClasses.some((cls) => element.classList.contains(cls))) return false;
 
   return true;
@@ -100,11 +100,17 @@ function processTextNode(textNode: Text): void {
       }
 
       const pinyin = safeGetPinyin(segment);
-      const span = document.createElement("span");
-      span.dataset.pinyin = pinyin;
-      span.className = "chinese-pinyin pinyin-processed";
-      span.textContent = segment;
-      fragment.appendChild(span);
+      const ruby = document.createElement("ruby");
+      ruby.className = "chinese-pinyin";
+
+      const text = document.createTextNode(segment);
+      ruby.appendChild(text);
+
+      const rt = document.createElement("rt");
+      rt.textContent = pinyin;
+      ruby.appendChild(rt);
+
+      fragment.appendChild(ruby);
     }
 
     parent.replaceChild(fragment, textNode);

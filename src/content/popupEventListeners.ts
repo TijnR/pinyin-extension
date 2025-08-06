@@ -1,5 +1,4 @@
 import { isChromeExtension } from "../utils/chrome";
-import { handleDirection } from "./eventHandlers/handleDirection";
 import { handleOnOff } from "./eventHandlers/handleOnOff";
 import { handleZoom } from "./eventHandlers/handleZoom";
 
@@ -20,26 +19,6 @@ export const initPopupEventListeners = () => {
         console.log("Responding to ping...");
         sendResponse({ status: "ok", message: "Content script ready" });
         break;
-
-      case "direction":
-        try {
-          const direction = message.payload.direction;
-          // Handle the event
-          handleDirection(direction);
-          // Send a response immediately
-          sendResponse({
-            status: "ok",
-            message: "Direction updated successfully",
-          });
-        } catch (error) {
-          console.error("Error handling direction message:", error);
-          sendResponse({
-            status: "error",
-            message: error instanceof Error ? error.message : "Unknown error",
-          });
-        }
-        break;
-
       case "enable":
         console.log("Received enable event from popup:", message.payload);
         handleOnOff(message.payload.enable);

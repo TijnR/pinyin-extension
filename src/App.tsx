@@ -1,5 +1,4 @@
 import { OnOff } from "./components/shared/OnOff/OnOff";
-import { TopBottom } from "./components/shared/TopBottom/TopBottom";
 import { Zoom } from "./components/shared/Zoom/Zoom";
 import { useChromeState } from "./hooks/useChromeState";
 import { cn } from "./lib/utils";
@@ -32,7 +31,6 @@ function App() {
             !enable && "opacity-30 pointer-events-none"
           )}
         >
-          <TopBottom />
           <Zoom />
         </div>
       </div>

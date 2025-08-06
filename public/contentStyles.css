@@ -1,50 +1,14 @@
-.pinyin-show {
-  .no-chinese-pinyin {
-    display: inline-block;
-  }
+ruby > rt {
+  display: none !important;
+}
 
+.pinyin-show {
   .chinese-pinyin {
-    position: relative;
-    display: inline-block;
-    padding-inline: 0.5em;
-    line-height: 1.2;
-    z-index: 100;
     white-space: nowrap;
     zoom: attr(data-zoom type(<number>), 1.25);
 
-    &::before {
-      content: attr(data-pinyin);
-      position: absolute;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 0.6em;
-      font-weight: 400;
-      font-style: normal;
-      font-family: "PingFang SC", "Microsoft YaHei", "SimSun", "Arial",
-        "sans-serif";
-    }
-  }
-}
-
-.pinyin-show.pinyin-show--bottom {
-  .chinese-pinyin {
-    margin-bottom: 1em;
-
-    &::before {
-      top: auto;
-      bottom: -1.2em;
-    }
-  }
-}
-
-.pinyin-show.pinyin-show--top {
-  .chinese-pinyin {
-    margin-top: 1em;
-
-    &::before {
-      top: -1.1em;
-      bottom: auto;
+    > rt {
+      display: ruby-text !important;
     }
   }
 }
