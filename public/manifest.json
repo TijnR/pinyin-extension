@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Pinyin Pro",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Pinyin Pro helps you get pinyin everywhere you want.",
   "action": {
     "default_popup": "index.html",
@@ -25,6 +25,9 @@
       "css": ["contentStyles.css"]
     }
   ],
-  "permissions": ["scripting", "activeTab", "storage"],
+  "background": {
+    "service_worker": "backgroundScript.js"
+  },
+  "permissions": ["scripting", "activeTab", "storage", "contextMenus"],
   "host_permissions": ["<all_urls>"]
 }

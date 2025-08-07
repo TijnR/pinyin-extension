@@ -36,6 +36,14 @@ export const initPopupEventListeners = () => {
           message: "Zoom updated successfully",
         });
         break;
+      case "TEST":
+        console.log("Received test event from popup:", message.payload);
+        alert("Test event received" + message?.payload);
+        sendResponse({
+          status: "ok",
+          message: "Test event received",
+        });
+        break;
 
       default:
         // Handle unknown message types

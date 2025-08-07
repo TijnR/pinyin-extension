@@ -14,12 +14,16 @@ export default defineConfig({
     rollupOptions: {
       input: {
         popup: resolve(__dirname, "index.html"),
-        contentScript: resolve(__dirname, "src/content/index.ts"),
+        contentScript: resolve(__dirname, "src/contentScript/index.ts"),
+        backgroundScript: resolve(__dirname, "src/backgroundScript/index.ts"),
       },
       output: {
         entryFileNames: (assetInfo) => {
           if (assetInfo.name === "contentScript") {
             return "contentScript.js";
+          }
+          if (assetInfo.name === "backgroundScript") {
+            return "backgroundScript.js";
           }
           return "[name].js";
         },
