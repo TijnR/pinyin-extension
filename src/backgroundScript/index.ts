@@ -1,15 +1,15 @@
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
-    id: "test",
-    title: "Test",
+    id: "show-pinyin",
+    title: "Show Pinyin",
     contexts: ["selection"],
   });
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId === "test" && tab?.id) {
+  if (info.menuItemId === "show-pinyin" && tab?.id) {
     chrome.tabs.sendMessage(tab.id, {
-      type: "TEST",
+      type: "show-pinyin",
       payload: info.selectionText,
     });
   }

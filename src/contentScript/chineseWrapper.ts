@@ -7,7 +7,7 @@ const processedNodes = new Set<Node>();
 let isProcessing = false;
 
 // Safe pinyin generation with error handling
-function safeGetPinyin(char: string): string {
+export function safeGetPinyin(char: string): string {
   try {
     const pinyin = pinyinPro(char, { nonZh: "removed" });
     return pinyin.split(" ").join("");
