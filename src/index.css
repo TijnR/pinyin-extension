@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./fonts.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -198,6 +199,7 @@ body {
   place-items: center;
   min-width: 450px;
   min-height: 100vh;
+  font-family: "Noto Sans SC", var(--font-sans);
 }
 
 h1 {

@@ -1,4 +1,5 @@
 import { OnOff } from "./components/shared/OnOff/OnOff";
+import { Selections } from "./components/shared/Selection/Selections";
 import { Zoom } from "./components/shared/Zoom/Zoom";
 import { useChromeState } from "./hooks/useChromeState";
 import { cn } from "./lib/utils";
@@ -33,6 +34,8 @@ function App() {
         >
           <Zoom />
         </div>
+        <h2 className="text-2xl font-thin ">Selection mode: </h2>
+        <Selections />
       </div>
     </div>
   );

@@ -1,6 +1,4 @@
-import { segmenter } from "@/utils/segmenter";
 import { isChromeExtension } from "../utils/chrome";
-import { pinyin as pinyinPro } from "pinyin-pro";
 import { handleOnOff } from "./eventHandlers/handleOnOff";
 import { handleZoom } from "./eventHandlers/handleZoom";
 
@@ -38,23 +36,6 @@ export const initPopupEventListeners = () => {
           message: "Zoom updated successfully",
         });
         break;
-      case "show-pinyin": {
-        console.log("Received test event from popup:", message.payload);
-
-        const segmentedPayload = Array.from(segmenter.segment(message.payload));
-        const segmentedText = segmentedPayload.map(({ segment }) => segment);
-
-        const pinyinFull = segmentedPayload.map((segment) =>
-          pinyinPro(segment.segment, { nonZh: "removed" }).replace(/ /g, "")
-        );
-        console.log(pinyinFull);
-        alert(`${segmentedText.join(" ")} \n ${pinyinFull.join(" ")}`);
-        sendResponse({
-          status: "ok",
-          message: "Test event received",
-        });
-        break;
-      }
 
       default:
         // Handle unknown message types

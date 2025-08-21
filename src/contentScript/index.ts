@@ -10,14 +10,13 @@ function setDefaultBaseStyles(): void {
   document.body.classList.add(CLASS_SHOW_PINYIN);
 
   chrome.storage.sync.get("zoom", (result) => {
-    console.log("zoom", result);
     if (result.zoom) {
       handleZoom(result.zoom);
     }
   });
 
   chrome.storage.sync.get("enable", (result) => {
-    if (result.enable) {
+    if (typeof result.enable === "boolean") {
       handleOnOff(result.enable);
     }
   });

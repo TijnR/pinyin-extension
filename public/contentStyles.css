@@ -4,6 +4,7 @@ ruby > rt {
 
 .pinyin-show {
   .chinese-pinyin {
+    display: ruby;
     white-space: nowrap;
     zoom: attr(data-zoom type(<number>), 1.25);
 
