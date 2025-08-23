@@ -12,21 +12,17 @@ Pinyin Pro is a Chrome extension that displays pinyin above Chinese text, making
 Perfect for learners and anyone who wants quick access to pinyin while browsing.
 
 ## Getting Started
- 1. Clone the repository:git clone https://github.com/TijnR/pinyin-extension.git
-cd pinyin-extension
 
- 2. Install dependencies:pnpm install
+1.  Clone the repository:git clone https://github.com/TijnR/pinyin-extension.git
+    cd pinyin-extension
 
- 3. Run in development (popup only) mode:pnpm dev
+2.  Install dependencies:pnpm install
 
- 4. Build the extension:pnpm build
+3.  Run in development (popup only) mode:pnpm dev
 
- 5. Load the extension in Chrome:
- ▫ Go to ‎`chrome://extensions`
- ▫ Enable “Developer mode”
- ▫ Click “Load unpacked” and select the ‎`dist` folder
+4.  Build the extension:pnpm build
 
-For linting, testing, and previewing, you can use:
- • ‎`pnpm lint` – Run ESLint
- • ‎`pnpm test` – Run tests
- • ‎`pnpm preview` – Preview the build
+5.  Load the extension in Chrome:
+    ▫ Go to ‎`chrome://extensions`
+    ▫ Enable “Developer mode”
+    ▫ Click “Load unpacked” and select the ‎`dist` folder
