@@ -1,7 +1,8 @@
 import { useChromeState } from "@/hooks/useChromeState";
 import { CHROME_STORAGE_KEYS } from "@/utils/constants";
-import { segmenter } from "@/utils/segmenter";
-import { pinyin as pinyinPro } from "pinyin-pro";
+import { pinyin } from "pinyin-pro";
+
+const segmenter = new Intl.Segmenter("zh-CN", { granularity: "word" });
 
 export const Selections = () => {
   const [selection] = useChromeState<string[]>(
@@ -40,7 +41,7 @@ export const Selections = () => {
                 <ruby key={segment.segment} className="text-3xl font-normal">
                   {cleanedSegment}
                   <rt>
-                    {pinyinPro(segment.segment, { nonZh: "removed" }).replace(
+                    {pinyin(segment.segment, { nonZh: "removed" }).replace(
                       / /g,
                       ""
                     )}

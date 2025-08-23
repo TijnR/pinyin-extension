@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build:content": "vite build -c vite.content.config.ts",
+    "build:app": "tsc -b && vite build",
+    "build": "pnpm run build:app && pnpm run build:content",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest"
