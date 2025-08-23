@@ -26,3 +26,18 @@ Perfect for learners and anyone who wants quick access to pinyin while browsing.
     ▫ Go to ‎`chrome://extensions`
     ▫ Enable “Developer mode”
     ▫ Click “Load unpacked” and select the ‎`dist` folder
+
+## Privacy Policy
+
+- **What the extension does**: Adds pinyin overlays locally in your browser. No account or sign‑in required.
+- **Data collection**: I do not collect, transmit, or sell personal data. No analytics, tracking pixels, or remote logging.
+- **Processing**: Page text is processed locally by the content script to generate pinyin. The extension does not send page content to any server.
+- **Storage**: Uses `chrome.storage` to save preferences (e.g., on/off state, mode, per‑site settings). No page content or browsing history is stored.
+- **Permissions**:
+  - **tabs / activeTab**: Apply pinyin on the page you are viewing when you activate the extension.
+  - **storage**: Persist your preferences locally.
+  - **contextMenus**: Provide optional right‑click actions for convenience.
+- **Remote code**: The extension does not execute remote code; all scripts and fonts are bundled with the extension package.
+- **Third‑party services**: None.
+- **Delete your data**: Remove the extension from Chrome to delete its stored preferences. Reinstalling starts with a clean state.
+- **Questions or issues**: Open an issue on the [GitHub issue tracker](https://github.com/TijnR/pinyin-extension/issues).
