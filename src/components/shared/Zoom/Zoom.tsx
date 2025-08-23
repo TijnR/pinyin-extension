@@ -62,7 +62,7 @@ export const Zoom = () => {
           <span className="sr-only">Zoom in</span>
           <MagnifyingGlassPlusIcon size={32} />
         </Button>
-        <span className="absolute top-0 right-0 left-0 text-center">
+        <span className="absolute top-0 right-0 left-0 text-center text-sm">
           zoom: {zoom[0].toFixed(2)}x
         </span>
       </div>

@@ -25,6 +25,7 @@ function App() {
           // disableExtension && "opacity-30 pointer-events-none"
         )}
       >
+        <h2 className="text-2xl font-thin ">Auto mode: </h2>
         <OnOff enable={enable} setEnable={setEnable} />
         <div
           className={cn(

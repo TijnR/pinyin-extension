@@ -13,7 +13,7 @@ chrome.contextMenus.onClicked.addListener((info) => {
       const existingSelections = result.selection || [];
 
       // Add the new selection to the array
-      const updatedSelections = [...existingSelections, info.selectionText];
+      const updatedSelections = [info.selectionText, ...existingSelections];
 
       // Store the updated array back to sync storage
       chrome.storage.sync.set({ selection: updatedSelections }, () => {
