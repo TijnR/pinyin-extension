@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Pinyin Pro",
   "version": "0.2.1",
-  "description": "Pinyin Pro helps you get pinyin everywhere, anytime.",
+  "description": "Instantly view pinyin for Chinese text on any website. Perfect for Mandarin learners and readers who want to improve pronunciation and comprehension.",
   "action": {
     "default_popup": "index.html",
     "default_icon": {
