@@ -12,7 +12,22 @@ export const Collection = () => {
   );
 
   if (selection.length === 0) {
-    return <p>No collection</p>;
+    return (
+      <div className="flex flex-col gap-4 items-center text-center">
+        <p className="text-base text-muted-foreground max-w-md">
+          To add a sentence to your collection, simply select any Chinese text
+          on a web page, right-click, and choose{" "}
+          <span className="font-semibold">"Show Pinyin"</span> from the context
+          menu. The sentence will be added here for you to review and practice.
+        </p>
+        <img
+          src="/collection-mode.png"
+          alt="How to add to collection"
+          width={400}
+          height={200}
+        />
+      </div>
+    );
   }
 
   return (

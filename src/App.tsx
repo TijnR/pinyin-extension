@@ -31,8 +31,12 @@ function App() {
           }}
         >
           <TabsList className="self-center mb-4">
-            <TabsTrigger value="auto">Auto</TabsTrigger>
-            <TabsTrigger value="collection">Collection</TabsTrigger>
+            <TabsTrigger value="auto" className="cursor-pointer">
+              Auto
+            </TabsTrigger>
+            <TabsTrigger value="collection" className="cursor-pointer">
+              Collection
+            </TabsTrigger>
           </TabsList>
           <TabsContent
             value="auto"
