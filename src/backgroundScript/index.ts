@@ -16,9 +16,16 @@ chrome.contextMenus.onClicked.addListener((info) => {
       const updatedSelections = [info.selectionText, ...existingSelections];
 
       // Store the updated array back to sync storage
-      chrome.storage.sync.set({ selection: updatedSelections }, () => {
-        chrome.action.openPopup();
-      });
+      chrome.storage.sync.set(
+        {
+          selection: updatedSelections,
+          activeTab: "collection",
+          enable: false,
+        },
+        () => {
+          chrome.action.openPopup();
+        }
+      );
     });
   }
 });

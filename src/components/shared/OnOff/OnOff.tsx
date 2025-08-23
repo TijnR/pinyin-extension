@@ -1,6 +1,7 @@
 import { Switch } from "@/components/ui/switch";
 import { useMutation } from "@tanstack/react-query";
 import { sendEnable } from "./api";
+import { useEffect } from "react";
 
 export const OnOff = ({
   enable,
@@ -15,11 +16,15 @@ export const OnOff = ({
     },
   });
 
+  useEffect(() => {
+    sendEvent(enable);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enable]);
+
   const handleOnOff = (enable: boolean) => {
     setEnable(enable);
     sendEvent(enable);
   };
-
   return (
     <Switch
       checked={enable}
