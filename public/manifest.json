@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Pinyin Pro",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Instantly view pinyin for Chinese text on any website. Perfect for Mandarin learners.",
   "action": {
     "default_popup": "index.html",
