@@ -15,10 +15,11 @@ export const Collection = () => {
     return (
       <div className="flex flex-col gap-4 items-center text-center">
         <p className="text-base text-muted-foreground max-w-md">
-          To add a sentence to your collection, simply select any Chinese text
-          on a web page, right-click, and choose{" "}
-          <span className="font-semibold">"Show Pinyin"</span> from the context
-          menu. The sentence will be added here for you to review and practice.
+          To save sentences, select any Chinese text on a web page, right-click,
+          then choose <span className="font-semibold">"Add to Collection"</span>
+          to store it here, or{" "}
+          <span className="font-semibold">"Copy Pinyin to Clipboard"</span> to
+          copy the converted pinyin.
         </p>
         <img
           src="/collection-mode.png"

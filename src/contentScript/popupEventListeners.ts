@@ -1,6 +1,9 @@
+import { pinyin } from "pinyin-pro";
 import { isChromeExtension } from "../utils/chrome";
 import { handleOnOff } from "./eventHandlers/handleOnOff";
 import { handleZoom } from "./eventHandlers/handleZoom";
+
+const segmenter = new Intl.Segmenter("zh-CN", { granularity: "word" });
 
 export const initPopupEventListeners = () => {
   console.log("Initializing popup event listeners...");
@@ -37,6 +40,25 @@ export const initPopupEventListeners = () => {
         });
         break;
 
+      case "copy-pinyin-to-clipboard": {
+        console.log(
+          "Received copy-pinyin-to-clipboard event from popup:",
+          message.payload
+        );
+        const text = Array.from(
+          segmenter.segment(message.payload.selectionText!)
+        )
+          .map((segment) =>
+            pinyin(segment.segment, { nonZh: "removed" }).replace(/ /g, "")
+          )
+          .filter(Boolean);
+        window.navigator.clipboard.writeText(text.join(" "));
+        sendResponse({
+          status: "ok",
+          message: "Pinyin copied to clipboard successfully",
+        });
+        break;
+      }
       default:
         // Handle unknown message types
         console.warn("Unknown message type received:", message.type);

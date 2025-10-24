@@ -41,3 +41,13 @@ Perfect for learners and anyone who wants quick access to pinyin while browsing.
 - **Third‑party services**: None.
 - **Delete your data**: Remove the extension from Chrome to delete its stored preferences. Reinstalling starts with a clean state.
 - **Questions or issues**: Open an issue on the [GitHub issue tracker](https://github.com/TijnR/pinyin-extension/issues).
+
+## Changelog
+
+### 0.2.3 — 2025-10-24
+
+- Added context menu actions: Copy Pinyin to Clipboard and Add to Collection.
+- Copy-to-clipboard now segments Chinese text and converts it to pinyin before writing to the clipboard.
+- Selecting “Add to Collection” stores the selection and opens the popup on the Collection tab.
+- Added runtime message handlers (ping, enable, zoom) and improved logging between popup and content script.
+- Manifest updated to include `clipboardWrite` permission.
